@@ -1,0 +1,13 @@
+.profile-menu-button{
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+}
+
+.profile-img{
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+}

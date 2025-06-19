@@ -1,0 +1,24 @@
+.nav-form{
+  display: flex;
+}
+
+#search-dropdown, .nav-input, .nav-submit-bttn{
+  border: none;
+  border-bottom: 1px solid rgb(163, 163, 163);
+
+}
+
+#search-dropdown{
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.nav-submit-bttn{
+  display: flex;
+  place-content: center;
+  justify-items: center;
+}
+
+.nav-submit-bttn svg{
+  margin-top: 3px;
+}
