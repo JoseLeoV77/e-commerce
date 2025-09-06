@@ -1,4 +1,4 @@
-.container, header, body {
+.container, header, .routes-container {
   display: flex;
 }
 
@@ -15,9 +15,9 @@ header{
 }
 
 .routes-container{
-  display: flex;
   place-content: center;
   height: 90%;
+  width: 100%;
 }
 
 .btn{

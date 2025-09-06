@@ -1,0 +1,18 @@
+.cart-checkout-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid rgb(124, 124, 124);
+  background-color: white;
+}
+
+.cart-checkout-info img {
+  max-width: 100px;
+  margin-right: 12px;
+}
+
+.cart-checkout-info ul {
+  list-style-type: none;
+  padding: 0;
+}

@@ -4,18 +4,19 @@ import { Product } from "./types";
 
 export const useProduct = () => {
   const location = useLocation()
-  const searchData = decodeURIComponent(location.search) //get unencoded search
-  const formattedSearchData = searchData.startsWith("?q=") ? searchData.slice(3) : "" //get the query, or well, the search. 
+ 
+  const queryParams = new URLSearchParams(location.search);
+  const formattedSearchData = queryParams.get('q') || ""; //get the query, or well, the search.
   const [productDetails, setProductDetails] = useState<Product[]>([])
   const [ loading, setLoading ] = useState(true)
 
   useEffect(()=>{
     setLoading(true)
-    const searchEndpoint = formattedSearchData 
+    const endpoint = formattedSearchData 
     ? `http://localhost:3000/search?q=${formattedSearchData}` 
-    : "http://localhost:3000"; //search everything or search specific product 
+    : "http://localhost:3000"; 
 
-    fetch(searchEndpoint)
+    fetch(endpoint)
       .then(res => {
         if (!res.ok) {
           throw new Error('Failed to fetch products')

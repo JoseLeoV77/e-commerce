@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useContext, useState } from "react"
 import { AuthContext } from "../../context/userContext"
 import { BackToShopButton } from "../BackToShopButton/BackToShop"
+import './login.css'
 
 
 export const Login = () => {
@@ -58,24 +59,39 @@ export const Login = () => {
 
   return (
     <div className="login-container">
-      <form action="">
-        <label htmlFor="login-username">Username</label>
-        <input onChange={handleChange} type="text" id="login-username" placeholder="Nombre de usuario" name="user_name" autoComplete="current-username"/>
+      <section className="login-card">
+        <form action="" className="login-form">
+          <h3>Login</h3>
 
-        <label htmlFor="login-password">Contraseña</label>
-        <input onChange={handleChange} type="password" id="login-password" placeholder="Contraseña" name="password" autoComplete="current-password"/>
-        
-        <label htmlFor="login-email">Email</label>
-        <input onChange={handleChange} type="email" id="login-email" placeholder="Email" name="email" autoComplete="current-email"/>
-        <button onClick={handleClick} className="btn">Log in</button>
-      </form>
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      {successMessage && <p className="success">{successMessage}</p>}
+          <section className="input-section">
+            <label htmlFor="login-username" className="login-lable">Username</label>
+            <input onChange={handleChange} type="text" id="login-username" placeholder="Username" name="user_name" autoComplete="current-username" className="login-input"/>
+          </section>
 
-      {/* <Link to'>Olvidaste tu contraseña? </p> */}
-      <p>Don't have an account? </p>
-      <Link to="/register">Sign up!</Link>
-      <BackToShopButton />
+          <section className="input-section">
+            <label htmlFor="login-password" className="login-lable">Password</label>
+            <input onChange={handleChange} type="password" id="login-password" placeholder="Password" name="password" autoComplete="current-password" className="login-input"/>
+          </section>
+
+          <section className="input-section">
+            <label htmlFor="login-email" className="login-lable">Email</label>
+            <input onChange={handleChange} type="email" id="login-email" placeholder="@Email" name="email" autoComplete="current-email" className="login-input"/>
+          </section>
+
+          <button onClick={handleClick} className="login-btn">Log in</button>
+        </form>
+        {errorMessage && <p className="error">{errorMessage}</p>}
+        {successMessage && <p className="success">{successMessage}</p>}
+
+        {/* <Link to'>Olvidaste tu contraseña? </p> */}
+        <section className="footer-section">
+          <section className="signup-link">
+            <p>Don't have an account? </p>
+            <Link to="/register">Sign up!</Link>
+          </section>
+          <BackToShopButton />
+        </section>
+      </section>
     </div>
   )
 }

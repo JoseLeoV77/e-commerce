@@ -1,4 +1,6 @@
+import { createOrder, captureOrder } from '../paypal/paypal.js'
 import jwt from 'jsonwebtoken'
+import crypto, { randomUUID } from 'node:crypto'
 import 'dotenv/config'
 
 export class UserController {
@@ -33,9 +35,30 @@ export class UserController {
     }
   }
 
+  getProductyBySlug = async (req, res) => {
+    const { productSlug } = req.params
+    console.log('productSlug in controller', productSlug)
+    try {
+      if (!productSlug) {
+        return res.status(400).json({ error: "Missing product name" })
+      }
+      const product = await this.userModel.getProductBySlug({ productSlug })
+
+      if (!product) {
+        res.status(404).json({ error: "Product not found" })
+      }
+
+      res.status(200).json(product)
+    } catch (error) {
+      console.error('Error in getProductByName controller', error.message)
+    }
+  }
+
   getCategories = async (req, res) => {
+    console.log("hello?")
     try {
       const categories = await this.userModel.getCategories()
+      console.log("inside cate")
       res.json(categories)
     } catch (error) {
       console.error('Error getting the categories', error)
@@ -46,7 +69,7 @@ export class UserController {
   login = async (req, res) => {
     const { user_name, password } = req.body
     if (!user_name || !password) {
-      return res.status(400).json({ error: 'Mssing required fields' })
+      return res.status(400).json({ error: 'Missing required fields' })
     }
     try {
       const user = await this.userModel.login({ user_name, password })
@@ -56,12 +79,21 @@ export class UserController {
         return res.status(401).json({ error: 'Invalid credentials' })
       }
 
+      // const session = await this.userModel.createSession({ user_id: user.user_id })
+      // const sessionId = session.session_id
+
+      // const accessToken = jwt.sign({ user_id: user.user_id, username: user_name, sid: sessionId }, process.env.JWT_SECRET, { expiresIn: "2h" })
+
       const accessToken = jwt.sign({ user_id: user.user_id, username: user_name }, process.env.JWT_SECRET, { expiresIn: "2h" })
+
+      // const refreshToken = jwt.sign({ user_id: user.user_id, username: user_name, sid: sessionId }, process.env.REFRESH_SECRET, { expiresIn: "7d" })
 
       const refreshToken = jwt.sign({ user_id: user.user_id, username: user_name }, process.env.REFRESH_SECRET, { expiresIn: "7d" })
 
+      const regreshTokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex')
+
       res.cookie('refresh_token', refreshToken, {
-        httpOnly: true,
+        httpOnly: true, //cannot be acccessed by Js
         secure: process.env.NODE_ENV === 'production', // Set to true if using HTTPS
         sameSite: 'Strict'
       })
@@ -69,7 +101,7 @@ export class UserController {
       return res.json({ user_name, accessToken })
     } catch (error) {
       console.error('Error in login', error.message)
-      res.status(500).json({ error: 'Failed to login' })
+      res.status(500).json({ error: 'Internal server error ocurred! ' })
     }
   }
 
@@ -105,17 +137,19 @@ export class UserController {
     if (!productName || !productPrice) {
       return res.status(400).json({ error: "Missing required fields" })
     }
-    if (!req.files) {
-      return res.status(400).json({ error: "No files uploaded" })
+
+    const imageUrls = req.imagePaths;
+
+    if (!imageUrls || imageUrls.length === 0) {
+      return res.status(400).json({ error: "No images uploaded" })
     }
-    const imagePaths = req.files.map(file => `/uploads/${file.filename}`)
-    console.log("Image paths: ", imagePaths)
+
     try {
       await this.userModel.createProduct({
         productName,
         productDescription,
         productPrice: Number(productPrice),
-        productImages: imagePaths,
+        productImages: imageUrls,
         category,
         userId: req.user.user_id
       })
@@ -175,5 +209,106 @@ export class UserController {
     //This route is just to display user info.
   }
 
+  createPaypalOrder = async (req, res) => {
+    try {
+      console.log("Back", req.body)
+      const seller = req.user
+      const { cart } = req.body;
+      console.log("Cart.items: ", cart.items)
+      console.log("lets see more than 1 cart item")
+      console.log(seller)
+
+      if (!cart || !cart.items || cart.items.length === 0) {
+        return res.status(400).json({ error: "Missing cart information!" });
+      }
+
+      const { jsonResponse, httpStatusCode } = await createOrder(cart, seller);
+
+      if (httpStatusCode >= 200 && httpStatusCode < 300) {
+        const paypalOrderId = jsonResponse.id
+        const initialValue = 0
+
+        const internalOrderId = randomUUID()
+
+        const cartTotalPrice = cart.items.reduce((accumulator, currentValue) => accumulator + Number(currentValue.price), initialValue)
+        console.log('before create, order', internalOrderId)
+        await this.userModel.createOrder({ orderId: internalOrderId, userId: seller.user_id, totalPrice: cartTotalPrice, paypalOrderId: paypalOrderId, status: "PENDING" })
+
+        await this.userModel.createOrderItems({
+          orderId: internalOrderId,
+          items: cart.items
+        })
+
+        res.status(httpStatusCode).json({ ...jsonResponse, internalOrderId });
+      } else {
+        res.status(httpStatusCode).json(jsonResponse);
+      }
+    } catch (error) {
+      console.error("Failed to create order:", error);
+      res.status(500).json({ error: "Failed to create order." });
+    }
+  }
+
+
+  capturePaypalOrder = async (req, res) => {
+    try {
+      const seller = req.user;
+      const { orderId } = req.params;
+      console.log('capture, seller', seller)
+      console.log("inside capturePaypalOrder ORDERID", orderId)
+      const internalOrder = await this.userModel.findByPaypalId({ paypalId: orderId });
+      if (!internalOrder) {
+        return res.status(404).json({ error: "Order not found." });
+      }
+      console.log("INTERNAL ORDER: ", internalOrder)
+      const isOrderOwner = await this.userModel.verifyOrderOwnership({ orderId: orderId, userId: seller.user_id });
+
+      if (!isOrderOwner) {
+        return res.status(403).json({ error: "Forbidden: You are not authorized to capture this order." });
+      }
+      const { jsonResponse, httpStatusCode } = await captureOrder(orderId);
+
+      if (httpStatusCode >= 200 && httpStatusCode < 300 && jsonResponse.status === 'COMPLETED') {
+
+        const capture = jsonResponse.purchase_units[0].payments.captures[0];
+        console.log("Captured Order Details:", capture)
+
+        const transactionDetails = {
+          transaction_id: capture.id,
+          order_id: internalOrder.order_id,
+          payment_status: jsonResponse.status,
+          amount_paid: capture.seller_receivable_breakdown.gross_amount.value,
+          currency_code: capture.seller_receivable_breakdown.gross_amount.currency_code,
+          paypal_fee: capture.seller_receivable_breakdown.paypal_fee.value,
+          transaction_created_at: capture.create_time,
+        }
+
+        await this.userModel.createTransaction({ transactionDetails });
+
+        const orderItems = await this.userModel.getOrderItems({ orderId: internalOrder.order_id });
+        console.log("ORDER ITEMS: ", orderItems)
+
+        for (const item of orderItems) {
+          await this.userModel.updateProductStock({
+            productId: item.product_id,
+            quantity: item.quantity
+          })
+        }
+
+        await this.userModel.updateStatus({ orderId: internalOrder.order_id });
+        console.log("Order captured successfully:", jsonResponse);
+      }
+
+      res.status(httpStatusCode).json(jsonResponse);
+
+    } catch (error) {
+      console.error("Failed to create order:", error);
+      res.status(500).json({ error: "Failed to capture order." });
+    }
+  }
+
+
 
 }
+
+

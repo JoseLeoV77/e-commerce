@@ -1,10 +1,11 @@
 import { useCategories } from "../../hooks/useCategories"
+import './categories.css'
 
 export const Categories = () => {
   const { categories } = useCategories()
 
   return(
-    <select name="searchDropdown" id="search-dropdown">
+    <select name="searchDropdown" id="search-dropdown" className="categories-dropdown">
       <option defaultValue='All' value='All'>All</option>
       {
         categories && categories.map((category, index) => (

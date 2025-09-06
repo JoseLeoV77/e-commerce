@@ -1,13 +1,6 @@
 import { ShoppinCartIcon } from "../Icons/Icons"
-import { useState } from "react"
-import { CartMenu } from '../CartMenu/CartMenu.tsx'
 
-export const Cart = () => {
-  const [ openCartMenu, setOpenCartMenu ] = useState(false)
-
-  function handleClick () {
-    setOpenCartMenu(!openCartMenu)
-  }
+export const Cart = ({ handleClick }) => {
 
   return (
     <div className='cart-menu-container'>
@@ -15,7 +8,6 @@ export const Cart = () => {
       onClick={handleClick}>
         <ShoppinCartIcon />
       </button>
-      {openCartMenu && <CartMenu />}
     </div>
   )
 }

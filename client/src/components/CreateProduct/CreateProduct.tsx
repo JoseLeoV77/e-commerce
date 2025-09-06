@@ -1,7 +1,8 @@
 import { useContext, useState } from "react"
-import "./createProducts.css"
 import { AuthContext } from "../../context/userContext"
 import { CategoriesCreateProduct } from "../CategoriesCreateProduct/CategoriesCreateProduct"
+import "./create-product.css"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -14,13 +15,13 @@ export const CreateProduct = () => {
     productPrice: 0,
     category: "",
   })
+  const navigate = useNavigate()
   
-
-  function handleChange (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) {
+  function handleChange (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     if (e.target.files) {
       setProductImages((prevImages) => {
-        const newImages = Array.from(e.target.files!); // Asume que e.target.files no es null
-        const uniqueImages = [...new Map([...prevImages, ...newImages].map(img => [img.name, img])).values()]; // Eliminar duplicados basados en el nombre del archivo
+        const newImages = Array.from(e.target.files!); // Asume que no es null, devuelve un arr con FileObjects, de aqui saco el name.
+        const uniqueImages = [...new Map([...prevImages, ...newImages].map(img => [img.name, img])).values()]; // Eliminar duplicados basados en el name de la img y retorna un arr con el FileObject de la img
         return uniqueImages;
     });
 
@@ -38,7 +39,7 @@ export const CreateProduct = () => {
     });
     
     productImages.forEach((image) => {
-      formData.append("productImages", image);
+      formData.append("productImages", image); //Form necesita FileOject de las img
     });
 
     fetch("http://localhost:3000/create", {
@@ -58,6 +59,10 @@ export const CreateProduct = () => {
     .catch((error) => {
       console.error("Error en la solicitud:", error);
     });
+  }
+
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    navigate('/profile')
   }
 
   return (
@@ -80,9 +85,9 @@ export const CreateProduct = () => {
       </label>
 
       <label htmlFor="productPrice">
-         Precio
+         Precio 
         <input id="productPrice" type="number" name="productPrice"
-        step="0.01" min="0" onChange={handleChange} />
+        step="0.01" min="0" onChange={handleChange} /> $
       </label>
 
       <label htmlFor="productImages">
@@ -90,7 +95,7 @@ export const CreateProduct = () => {
         <input id="productImages" type="file" name="productImages" accept="image/*" onChange={handleChange} multiple/>
       </label>
 
-      <button type="submit" >Publicar</button>
+      <button type="submit" onClick={handleClick}>Publicar</button>
     </form>
   )
 }

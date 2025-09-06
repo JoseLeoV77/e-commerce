@@ -11,6 +11,7 @@ export const About = () => {
         <li>Node</li>
         <li>Express</li>
         <li>MySQL</li>
+        <li>Supabase</li>
       </ul>
       <p>And created By: Jose Leonardo Vasquez La Rosa</p>
     </section>

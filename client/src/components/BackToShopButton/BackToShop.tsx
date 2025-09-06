@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import './back-to-shop.css'
 
 export const BackToShopButton = () => {
   return (

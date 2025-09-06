@@ -1,9 +1,9 @@
 import { SearchIcon } from "../Icons/Icons"
 // import { useLocation } from "react-router-dom"
 import { useState } from "react"
-import './searchForm.css'
 import { useNavigate } from "react-router-dom"
 import { Categories } from "../Categories/Categories"
+import './search-form.css'
 
 export const SearchForm = () => {
   const [inputValue, setInputValue ] = useState('')

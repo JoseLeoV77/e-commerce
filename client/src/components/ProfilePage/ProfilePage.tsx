@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { AuthContext } from "../../context/userContext"
 import { Link } from "react-router-dom"
 import { ProfileNav } from "../ProfileNav/ProfileNav"
+import "./profile-page.css"
 
 export const ProfilePage = () => {
   const {user, isAuthenticated} = useContext(AuthContext) 
@@ -22,6 +23,10 @@ export const ProfilePage = () => {
           <h2>Mis pedidos</h2>
           <ProfileNav />
           {/* Aquí se pueden mostrar los pedidos del usuario */}
+        </section>
+        <section className="profile-page-create-product">
+          <h2>Crear producto</h2>
+          <Link to="/create-product">Crear nuevo producto</Link>
         </section>
       </div>
       : 

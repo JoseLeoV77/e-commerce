@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../../context/userContext.tsx";
 import { LogoutButton } from "../LogoutButton/LogoutButton.tsx";
-import './profileMenu.css'
+import './profile-menu.css'
 import { Link } from "react-router-dom";
 
 export const ProfileMenu = () => {

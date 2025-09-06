@@ -53,7 +53,7 @@ export const UserRegister = () => {
         onChange={handleInput} 
         type="text" 
         id="register-username" 
-        placeholder="Nombre de usuario" 
+        placeholder="Username" 
         name="user_name"
         className="register-input"
         />
@@ -63,7 +63,7 @@ export const UserRegister = () => {
         onChange={handleInput} 
         type="email" 
         id="register-email" 
-        placeholder="Email" 
+        placeholder="@Email" 
         name="email"
         className="register-input"
         />
@@ -73,7 +73,7 @@ export const UserRegister = () => {
         onChange={handleInput} 
         type="password" 
         id="register-password" 
-        placeholder="Contraseña" 
+        placeholder="Password" 
         name="password"
         className="register-input"
         />
@@ -83,7 +83,7 @@ export const UserRegister = () => {
         onChange={handleInput} 
         type="password" 
         id="re-enter-password" 
-        placeholder="Contraseña" 
+        placeholder="Confirm Password" 
         name="re_password"
         className="register-input"
         />
@@ -93,10 +93,10 @@ export const UserRegister = () => {
         <button onClick={handleClick} className="register-btn btn">Register</button>
       </form>
 
-      <section className="btshop-login-btn-container">
-        <p>Have an account? </p>
+      <section className="login-link-container">
+        <p>Already have an account? </p>
         <Link to="/login">
-          <button className="login-btn btn">Login!</button>
+          <span className="login-link">Login!</span>
         </Link>
 
         <BackToShopButton />

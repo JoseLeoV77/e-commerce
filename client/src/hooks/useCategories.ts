@@ -9,6 +9,9 @@ export const useCategories = () => {
       .then(res => {
         setCategories(res)
       })
+      .catch(err => {
+        console.error('Error fetching categories:', err)
+      })
 
   }, []) // fetch categories to display in the dropdown.
 
