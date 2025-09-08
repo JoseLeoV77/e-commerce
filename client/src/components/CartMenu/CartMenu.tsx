@@ -42,7 +42,7 @@ export const CartMenu = () => {
   return(
     <section className="cart-menu" >
       <h5>Your cart: </h5>
-      <ul>
+      <ul className="cart-menu-list">
         {
         cartProducts.length > 0
         ? cartProducts.map((item, index) => (
@@ -59,7 +59,6 @@ export const CartMenu = () => {
                 <button className="qty-menu-btn" onClick={handleCart}>+</button>
                 <button className="qty-menu-btn" onClick={handleCart}>-</button>
               </section>
-
             </section>
           </li>
         ))

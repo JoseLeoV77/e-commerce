@@ -17,8 +17,8 @@
 }
 
 .nav-cart-popup{
-  width: 20%;
-  height: 40%;
+  width: 25%;
+  height: 60%;
   flex-direction: column;
   background-color: white;
   border: 1px solid black;

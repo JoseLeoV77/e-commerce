@@ -1,3 +1,12 @@
+.cart-menu-list{
+  padding: 0 10px;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
 .cart-menu{
   background-color: rgb(235, 234, 234);
   height: 100%;
@@ -21,10 +30,19 @@
 }
 
 .qty-menu-btn{
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border: none;
   background-color: rgb(200, 200, 200);
   margin: 0 2px;
   cursor: pointer;
+}
+
+.qty-menu-btn:hover{
+  opacity: 0.5;
+}
+
+.cart-menu li:last-child{
+
+  margin-bottom: 20px;
 }
