@@ -9,15 +9,15 @@ interface CartContextType {
   cartId: string | null,
   addToCart: (product: any) => void;
   removeFromCart: (product: any) => void;
+  reduceFromCart: (product: any) => void;
 }
-
-
 
 export const CartContext = createContext<CartContextType>({
   cart: [],
   cartId: "",
   addToCart: () => {},
-  removeFromCart: () => {}
+  removeFromCart: () => {},
+  reduceFromCart: () => {}
 })
 
 export const CartProvider = ({ children }: GlobalProps) => {
@@ -27,7 +27,7 @@ export const CartProvider = ({ children }: GlobalProps) => {
     useEffect(() => {
       const storedCart = localStorage.getItem("cart");
       if (storedCart) {
-        setCart(JSON.parse(storedCart)); // Load stored cart data
+        setCart(JSON.parse(storedCart)); 
       }
     }, []);
 
@@ -57,8 +57,26 @@ export const CartProvider = ({ children }: GlobalProps) => {
     window.localStorage.removeItem("cart")
   }
 
+  const reduceFromCart = (product: any) => {
+    setCart(prevCart => {
+      const existingProductIndex = prevCart.findIndex(item => item.id === product.id);
+      let updatedCart = [...prevCart]; 
+      if (existingProductIndex !== -1) {
+        if (updatedCart[existingProductIndex].quantity > 1) {
+          updatedCart[existingProductIndex].quantity -= 1;
+        } else {
+          updatedCart.splice(existingProductIndex, 1); 
+        }
+      }
+
+      return updatedCart;
+    });
+
+    setCartId(product.id);
+  }
+
   return (
-    <CartContext.Provider value={{ cart, cartId, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, cartId, addToCart, removeFromCart, reduceFromCart }}>
       {children}
     </CartContext.Provider>
   )

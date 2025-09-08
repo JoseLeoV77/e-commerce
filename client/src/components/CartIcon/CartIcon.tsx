@@ -1,6 +1,10 @@
 import { ShoppinCartIcon } from "../Icons/Icons"
 
-export const Cart = ({ handleClick }) => {
+interface CartIconProps {
+  handleClick: () => void
+}
+
+export const CartIcon = ({ handleClick }: CartIconProps) => {
 
   return (
     <div className='cart-menu-container'>

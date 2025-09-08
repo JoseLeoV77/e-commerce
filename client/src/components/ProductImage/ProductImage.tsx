@@ -3,7 +3,8 @@ interface ProductImageProps {
     id: string,
     name: string,
     description: string,
-    image_url: string
+    image_url: string,
+    price: number,
   },
 } 
 
@@ -12,7 +13,6 @@ export const ProductImage = ({ product }: ProductImageProps) => {
   if (!product || !product.image_url) {
     return <div>No image available</div>;
   }
- 
 
   return (
     <>

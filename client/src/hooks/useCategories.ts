@@ -13,7 +13,7 @@ export const useCategories = () => {
         console.error('Error fetching categories:', err)
       })
 
-  }, []) // fetch categories to display in the dropdown.
+  }, []) 
 
   return {
     categories

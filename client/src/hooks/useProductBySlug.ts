@@ -7,7 +7,6 @@ export const useProductBySlug = () => {
   const [productDetails, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
 
-
   useEffect(()=>{
     const endpoint = `http://localhost:3000/products/${slug}`
     if(!slug) {

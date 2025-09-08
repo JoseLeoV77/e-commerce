@@ -17,11 +17,11 @@ import { Checkout } from './components/Checkout/Checkout.tsx'
 
 function App() {
   const location = useLocation()
-  const excludePaths = ['/register', '/login'] //pages with no navbar
+  const excludedPaths = ['/register', '/login'] //pages with no navbar
 
   return (
     <div className='container'>
-        {!excludePaths.includes(location.pathname) 
+        {!excludedPaths.includes(location.pathname) 
         && <header>
             <Navbar/>
           </header>

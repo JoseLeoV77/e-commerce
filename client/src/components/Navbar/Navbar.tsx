@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { SearchForm } from '../SearchForm/SearchForm.tsx'
-import { useContext } from 'react'
+import { useState, useContext } from 'react'
 import { AuthContext } from '../../context/userContext.tsx'
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu.tsx'
-import { Cart } from '../Cart/Cart.tsx'
+import { CartIcon } from '../CartIcon/CartIcon.tsx'
 import { CartMenu } from '../CartMenu/CartMenu.tsx'
-import { useState } from 'react'
 import './navbar.css'
 
 export const Navbar = () => {
@@ -36,7 +35,7 @@ export const Navbar = () => {
             </Link>
           </div>  
         }
-        <Cart handleClick={handleClick} />
+        <CartIcon handleClick={handleClick} />
       </section>
       {openCartMenu &&  
       <section className='nav-cart-popup'>

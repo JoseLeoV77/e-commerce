@@ -22,7 +22,7 @@ export const ProductDetails = () => {
       name: productDetails.product_name, 
       description: productDetails.product_description, 
       price: productDetails.price, 
-      image: productDetails.image_url[0],
+      image: productDetails.image_url,
     })
 
   }
@@ -44,7 +44,7 @@ export const ProductDetails = () => {
           {productDetails ? productDetails.product_description : ''}
         </div>
         <div className="product-price">   
-          {productDetails ? productDetails.price : ''}
+          {productDetails ? productDetails.price : ''}$
         </div>
         <div className="product-seller">
           <span>Seller: </span>

@@ -1,20 +1,44 @@
 import { useContext, useEffect, useState } from "react"
 import { CartContext } from "../../context/cartContext"
 import { RemoveIcon } from "../Icons/Icons"
-import "./CartMenu.css"
+import "./cart-menu.css"
 
 export const CartMenu = () => {
-  const { cart, removeFromCart } = useContext(CartContext)
+  const { cart, removeFromCart, addToCart, reduceFromCart } = useContext(CartContext)
   const [ cartProducts, setCartItems ] = useState<any[]>([])
-
+  const [ products ] = cartProducts
+  console.log(products)
   useEffect(() => {
     setCartItems(cart)
   }, [cart])
+
+  function handleCart(e: React.MouseEvent<HTMLButtonElement>) {
+    if(!products) return
+    
+    if(e.target.textContent === "+"){
+      addToCart({
+        id: products?.id, 
+        name: products.name, 
+        price: products.price, 
+        image: products.image,
+      })
+
+    }
+
+    if(e.target.textContent === "-"){
+      reduceFromCart({
+        id: products?.id, 
+        name: products.name, 
+        price: products.price, 
+        image: products.image,
+      })
+    }
+  }
   
   function handleRemove(item: string) {
     removeFromCart(item)
   }
-
+  console.log('cartProducsts:',cartProducts)
   return(
     <section className="cart-menu" >
       <h5>Your cart: </h5>
@@ -23,18 +47,23 @@ export const CartMenu = () => {
         cartProducts.length > 0
         ? cartProducts.map((item, index) => (
           <li key={index}>
-            <img src={item.image} alt={item.name} width="50" height="50" />
-            <div style={{color: 'white'}}>{item.name}</div>
-            <div>{item.price}</div>
+            <img src={item.image} alt={item.name + " image"} width="50" height="50" />
+            <div style={{color: 'black'}}>{item.name}</div>
+            <div>{item.price}$</div>
             <section>
               <button onClick={() => handleRemove(item.name)} style={{backgroundColor: 'transparent', border: 'none', width: '20px', height: '20px'}}>
                 <RemoveIcon />
               </button>
-              <div>{item.quantity}</div>
+              <section>
+                <div>{item.quantity}</div>
+                <button className="qty-menu-btn" onClick={handleCart}>+</button>
+                <button className="qty-menu-btn" onClick={handleCart}>-</button>
+              </section>
+
             </section>
           </li>
         ))
-        : <div>Here you can see you products in added to cart!</div>
+        : <div>Add some products!</div>
         }
       </ul>
     </section>

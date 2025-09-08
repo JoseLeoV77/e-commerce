@@ -17,7 +17,7 @@ const init = async () => {
 
   app.use(cookieParser())
 
-  app.disable('x-powered-by') //Por seguridad y para dar menos info, deshabilitar el header de express. 
+  app.disable('x-powered-by')
   app.use(json())
   app.use(cors({
     origin: 'http://localhost:5173', // Cambia esto a la URL de tu frontend

@@ -12,11 +12,6 @@ interface OrderData {
   debug_id?: string;
 }
 
-interface CaptureData {
-  jsonResponse: any;
-  httpStatusCode: number;
-}
-
 export const usePaypal = () => {
     const { accessToken } = useContext(AuthContext)
     const { cart } = useContext(CartContext)

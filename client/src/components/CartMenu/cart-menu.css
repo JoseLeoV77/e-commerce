@@ -1,0 +1,30 @@
+.cart-menu{
+  background-color: rgb(235, 234, 234);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+.cart-menu h5{
+  color: black;
+  margin: 10px 0;
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.cart-menu li{
+  list-style: none;
+}
+
+.qty-menu-btn{
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-color: rgb(200, 200, 200);
+  margin: 0 2px;
+  cursor: pointer;
+}

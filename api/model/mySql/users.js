@@ -3,6 +3,8 @@ import { randomUUID } from 'node:crypto'
 import bcrypt from 'bcrypt'
 import slugify from 'slugify'
 
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS) || 10
+
 export class UserModel {
   constructor(dbPool) {
     this.db = dbPool
@@ -101,9 +103,14 @@ export class UserModel {
   async login({ user_name, password }) {
     console.log('model', user_name, password)
     try {
-      const [user] = await this.db.query('SELECT BIN_TO_UUID(user_id) AS user_id, user_name, user_password FROM users WHERE user_name = ? AND user_password = ?', [user_name, password])
+      const [user] = await this.db.query('SELECT BIN_TO_UUID(user_id) AS user_id, user_name FROM users WHERE user_name = ?', [user_name])
       console.log('user in model: ', user)
-      //const isValid = await bcrypt.compare(password, user[0].user_password) //not done yet
+
+      const hashedPasswordFromDb = user[0].user_password
+      const isValid = await bcrypt.compare(password, hashedPasswordFromDb)
+
+      if (!isValid) throw new Error('Invalid password')
+
       return user.length > 0 ? user[0] : null
     } catch (error) {
       console.error('Error fetching user: ', error)
@@ -120,7 +127,7 @@ export class UserModel {
       }
 
       const newUserId = randomUUID()
-      const hashedPasswword = await bcrypt.hash(password, 10)
+      const hashedPasswword = await bcrypt.hash(password, SALT_ROUNDS)
 
       const [result] = await this.db.query('INSERT INTO users (user_id, user_name, user_password, email) VALUES (UUID_TO_BIN(?), ?, ?, ?)', [newUserId, user_name, hashedPasswword, email])
       return result
@@ -142,7 +149,6 @@ export class UserModel {
     email
     FROM users
     WHERE user_id = UUID_TO_BIN(?);`, [userId])
-    console.log('user in createProduct:', user)
 
     if (!user.length) {
       throw new Error('User not found')
