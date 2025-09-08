@@ -2,6 +2,8 @@
   background-color: var(--background-color);
   color: white;
   border-radius: 4px;
+  width: 190px;
+  height: 30px;
 }
 
 .back-to-shop-btn:hover{
