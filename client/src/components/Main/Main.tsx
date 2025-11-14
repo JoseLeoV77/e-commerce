@@ -4,6 +4,7 @@ import { MainSlider } from "../MainSlider/MainSlider"
 import { CustomNextArrow, CustomPrevArrow } from "../CustomArrows/CustomArrows"
 import { useRef } from "react"
 import Slider from "react-slick"
+import Footer from "../Footer/Footer"
 import './main.css'
 
 export const Main = () => {
@@ -44,6 +45,9 @@ export const Main = () => {
             </li>
           ))}
         </ul>
+      </section>
+      <section>
+        <Footer companyName="EShop" year={2025}/>
       </section>
     </main>
   )
