@@ -1,21 +1,22 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/cartContext.tsx";
+import { useTranslation } from "react-i18next";
 import "./cart-checkout.css";
 
 export const CartCheckoutInfo = () => {
   const { cart } = useContext(CartContext);
-
+  const { t } = useTranslation()
   return (
     <section className="cart-checkout-info">
       <hgroup>
-        <h2>Checkout Information</h2>
-        <p>Please review your cart items before proceeding to checkout.</p>
-        <p>Ensure that all details are correct to avoid any issues with your order.</p>
+        <h2>{t("checkout_info")}.</h2>
+        <p>{t("checkout_review_cart")}.</p>
+        <p>{t("checkout_avoid_order_issues")}.</p>
       </hgroup>
       <ul>
         {
           cart.length === 0 
-          ? <li>Your cart is empty.</li> 
+          ? <li>{t("checkout_cart_is_empty")}.</li> 
           : cart.map(item => (
             <li key={item.id}>
               <img src={item.image} alt={item.name} />

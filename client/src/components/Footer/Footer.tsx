@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useTranslation } from 'react-i18next';
+import "./footer.css"
 
 interface NavLink {
   label: string;
@@ -13,23 +15,8 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
-  const [newsletterEmail, setNewsletterEmail] = useState<string>('');
-  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsletterEmail) return;
-
-    setNewsletterStatus('submitting');
-    // try {
-    //   await newsletterSignup(newsletterEmail);
-    //   setNewsletterStatus('success');
-    //   setNewsletterEmail('');
-    // } catch (error) {
-    //   console.error('Newsletter signup failed:', error);
-    //   setNewsletterStatus('error');
-    // }
-  };
+  const { t } = useTranslation()
 
   const customerServiceLinks: NavLink[] = [
     { label: 'Contact Us', href: '/contact' },
@@ -40,18 +27,14 @@ const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
   ];
 
   const shopLinks: NavLink[] = [
-    { label: "Men's", href: '/shop/men' },
-    { label: "Women's", href: '/shop/women' },
-    { label: 'Accessories', href: '/shop/accessories' },
-    { label: 'New Arrivals', href: '/shop/new-arrivals' },
-    { label: 'Sale', href: '/shop/sale' },
+    { label: "Gaming", href: '/search?q=gaming' },
+    { label: "Furniture", href: '/search?q=furniture' },
   ];
 
   const companyLinks: NavLink[] = [
     { label: 'About Us', href: '/about' },
     { label: 'Careers', href: '/careers' },
     { label: 'Press / Blog', href: '/blog' },
-    // { label: 'Store Locator', href: '/stores' }, // Uncomment if applicable
   ];
 
   const legalLinks: NavLink[] = [
@@ -64,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
     <footer className="footer-container">
       <div className="footer-content">
         <div className="footer-section">
-          <h3>Customer Service</h3>
+          <h3>{t("customer_service_word")}</h3>
           <ul>
             {customerServiceLinks.map((link) => (
               <li key={link.label}>
@@ -75,7 +58,7 @@ const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
         </div>
 
         <div className="footer-section">
-          <h3>Shop</h3>
+          <h3>{t("shop_word")}</h3>
           <ul>
             {shopLinks.map((link) => (
               <li key={link.label}>
@@ -86,7 +69,7 @@ const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
         </div>
 
         <div className="footer-section">
-          <h3>Company</h3>
+          <h3>{t("company_word")}</h3>
           <ul>
             {companyLinks.map((link) => (
               <li key={link.label}>
@@ -108,7 +91,7 @@ const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
         </div>
 
         <div className="footer-section newsletter-social">
-          <h3>Stay Connected</h3>
+          <h3>{t("stay_connected")}</h3>
           <div className="social-icons">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <FontAwesomeIcon icon={faFacebookF} />
@@ -124,7 +107,7 @@ const Footer: React.FC<FooterProps> = ({ companyName, year }) => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {year} {companyName}. All rights reserved.</p>
+        <p>&copy; {year} {companyName}. {t("rights_reserved")}</p>
       </div>
     </footer>
   );

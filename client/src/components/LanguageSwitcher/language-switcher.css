@@ -1,0 +1,23 @@
+.language-switcher {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 15px; 
+}
+
+.language-link {
+    color: #999; 
+    text-decoration: none;
+    padding: 0 4px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.language-link.active {
+    color: white;
+    font-weight: 700;
+    pointer-events: none; 
+}
+
+.separator {
+    color: #999;
+}

@@ -1,6 +1,6 @@
-/* Footer.module.css */
 .footer-container {
-  background-color: #f8f8f8; /* Light background, or a darker one if your design uses it */
+  margin-top: 40px;
+  background-color: #f8f8f8; 
   color: #333;
   padding: 40px 20px;
   border-top: 1px solid #eee;
@@ -10,15 +10,15 @@
 
 .footer-content {
   display: flex;
-  flex-wrap: wrap; /* Allows sections to wrap on smaller screens */
+  flex-wrap: wrap;
   justify-content: space-around;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .footer-section {
-  flex: 1; /* Distribute space evenly */
-  min-width: 180px; /* Minimum width before wrapping */
+  flex: 1;
+  min-width: 180px; 
   margin: 15px 10px;
 }
 

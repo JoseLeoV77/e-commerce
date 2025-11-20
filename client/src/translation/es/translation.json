@@ -1,0 +1,16 @@
+{
+    "checkout_info": "Información de pago",
+  "checkout_review_cart": "Porfavor, revise los artículos de su carrito antes de proceder al pago",
+  "checkout_avoid_order_issues": "Asegúrese que todos los datos sean correctos para evitar problemas con su pedido",
+  "checkout_cart_is_empty": "Su carrito está vacío",
+  "back_to_shop": "Volver a la tienda",
+  "stay_connected": "Mantente conectado",
+  "rights_reserved": "Derechos reservados",
+  "customer_service_word": "Servicio al cliente",
+  "company_word": "Empresa",
+  "shop_word": "Tienda",
+  "search_results": "Resultados",
+  "search_no_products_found": "No se encontraron productos",
+  "register_text_key": "Registrarse",
+  "login_text_key": "Iniciar sesión"
+}

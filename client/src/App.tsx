@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Route } from 'react-router-dom'
 import './App.css'
+import './i18n.ts'
+import { Route } from 'react-router-dom'
 import { Main } from './components/Main/Main.tsx'
 import { Navbar } from './components/Navbar/Navbar.tsx'
 import { Results } from './components/SearchResults/Results.tsx'

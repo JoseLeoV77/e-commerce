@@ -5,11 +5,13 @@ import { AuthContext } from '../../context/userContext.tsx'
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu.tsx'
 import { CartIcon } from '../CartIcon/CartIcon.tsx'
 import { CartMenu } from '../CartMenu/CartMenu.tsx'
+import { useTranslation } from 'react-i18next'
 import './navbar.css'
+import { LanguageSwitcher } from '../LanguageSwitcher/LanguageSwticher.tsx'
 
 export const Navbar = () => {
+  const { t } = useTranslation()
   const { user, isAuthenticated } = useContext(AuthContext)
-
   const [ openCartMenu, setOpenCartMenu ] = useState(false)
   
   function handleClick () {
@@ -22,16 +24,17 @@ export const Navbar = () => {
         <Link style={{textDecoration:'none'}} to='/'>
           <span className='logo-placeholder'>LOGO</span>
         </Link>
+        <LanguageSwitcher />
         <SearchForm />
         {isAuthenticated 
         ? <ProfileMenu/>
         : <div>
             <Link to='/register'>
-              <span className='register-text'>Sign up </span>
+              <span className='register-text'> {t("register_text_key")} </span>
             </Link>
             <span style={{color: 'white'}}> | </span>
             <Link to='/login'>
-              <span className='register-text'> Login </span>
+              <span className='register-text'>{t("login_text_key")} </span>
             </Link>
           </div>  
         }

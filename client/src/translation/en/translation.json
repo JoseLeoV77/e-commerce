@@ -1,0 +1,20 @@
+{
+  "checkout_info": "Checkout Information",
+  "checkout_review_cart": "Please review your cart items before proceeding to checkout",
+  "checkout_avoid_order_issues": "Ensure that all details are correct to avoid any issues with your order",
+  "checkout_cart_is_empty": "Your cart is empty",
+  "back_to_shop": "Back to Shop",
+  "stay_connected": "Stay connected",
+  "rights_reserved": "All rights reserved",
+  "customer_service_word": "Customer Service",
+  "company_word": "Company",
+  "shop_word": "Shop",
+  "header_title": "My E-commerce Shop",
+  "product_name": "Product: {{product}}",
+  "cart_button": "Add to Cart",
+  "welcome_message": "Welcome, **{{user}}**! You have {{count}} item(s) in your cart.",
+  "search_results": "Results",
+  "search_no_products_found": "No products found",
+  "register_text_key": "Sign Up",
+  "login_text_key": "Log in"
+}
