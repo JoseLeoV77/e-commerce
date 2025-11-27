@@ -1,4 +1,8 @@
 {
+  "select_category": "Select a category",
+  "all_categories": "All",
+  "add_some_products": "Add some products",
+  "your_cart": "Your cart",
   "checkout_info": "Checkout Information",
   "checkout_review_cart": "Please review your cart items before proceeding to checkout",
   "checkout_avoid_order_issues": "Ensure that all details are correct to avoid any issues with your order",

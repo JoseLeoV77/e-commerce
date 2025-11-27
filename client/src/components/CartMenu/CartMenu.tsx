@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react"
 import { CartContext } from "../../context/cartContext"
 import { RemoveIcon } from "../Icons/Icons"
+import { useTranslation } from "react-i18next";
 import "./cart-menu.css"
 
 export const CartMenu = () => {
   const { cart, removeFromCart, addToCart, reduceFromCart } = useContext(CartContext)
   const [ cartProducts, setCartItems ] = useState<any[]>([])
   const [ products ] = cartProducts
+  const { t } = useTranslation()
   console.log(products)
   useEffect(() => {
     setCartItems(cart)
@@ -41,7 +43,7 @@ export const CartMenu = () => {
   console.log('cartProducsts:',cartProducts)
   return(
     <section className="cart-menu" >
-      <h5>Your cart: </h5>
+      <h5>{t("your_cart")}: </h5>
       <ul className="cart-menu-list">
         {
         cartProducts.length > 0
@@ -62,7 +64,7 @@ export const CartMenu = () => {
             </section>
           </li>
         ))
-        : <div>Add some products!</div>
+        : <div>{t("add_some_products")}</div>
         }
       </ul>
     </section>

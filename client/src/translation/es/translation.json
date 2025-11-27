@@ -1,4 +1,7 @@
 {
+  "all_categories": "Todos",
+  "add_some_products": "Agrega algunos productos",
+  "your_cart": "Tu carrito",
     "checkout_info": "Información de pago",
   "checkout_review_cart": "Porfavor, revise los artículos de su carrito antes de proceder al pago",
   "checkout_avoid_order_issues": "Asegúrese que todos los datos sean correctos para evitar problemas con su pedido",
